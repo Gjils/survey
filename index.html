@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Комьюнити-тиерлист</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Внутренний опрос</p>
+        <h1>Тир-лист по категориям</h1>
+        <p class="lede">Разложите участников по уровням (S, A, B, C, D) в каждой категории. Экспортируйте результаты в JSON или CSV.</p>
+      </div>
+      <div class="top-actions">
+        <button id="export-json" class="ghost">Скачать JSON</button>
+        <button id="export-csv" class="primary">Скачать CSV</button>
+        <label class="ghost file-label">
+          Загрузить JSON
+          <input type="file" id="import-json" accept="application/json" hidden />
+        </label>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="board">
+        <div class="card board-head">
+          <div>
+            <p class="eyebrow">Текущая категория</p>
+            <h2 id="active-category-name">Нет категорий</h2>
+            <p class="note">Выберите категорию ниже и перетаскивайте участников между тир-листами. "Неразмещено" — временная парковка.</p>
+          </div>
+          <div class="board-actions">
+            <button id="reset-category" class="ghost">Очистить расстановку</button>
+          </div>
+        </div>
+
+        <div class="card category-bar">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Категории</p>
+              <h2>Критерии</h2>
+            </div>
+            <span class="badge" id="category-count">0</span>
+          </div>
+          <div id="category-list" class="category-list" aria-live="polite"></div>
+        </div>
+
+        <div id="tier-container" class="tiers" aria-live="polite"></div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
