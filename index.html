@@ -51,7 +51,20 @@
           <div id="category-list" class="category-list" aria-live="polite"></div>
         </div>
 
-        <div id="tier-container" class="tiers" aria-live="polite"></div>
+        <div class="board-body">
+          <div id="tier-container" class="tiers" aria-live="polite"></div>
+
+          <div class="card unassigned">
+            <div class="section-head">
+              <div>
+                <p class="eyebrow">Неразмещённые</p>
+                <h2>Парковка</h2>
+              </div>
+              <span class="badge" id="unassigned-count">0</span>
+            </div>
+            <div id="unassigned-list" class="tier-list" data-tier-id="Unassigned" aria-live="polite"></div>
+          </div>
+        </div>
       </section>
     </main>
   </div>

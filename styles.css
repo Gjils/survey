@@ -217,10 +217,24 @@ button.ghost, label.file-label {
 
 .note { color: var(--muted); margin: 6px 0 0; }
 
+.board-body {
+  display: grid;
+  grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.85fr);
+  gap: 12px;
+  align-items: start;
+}
+
 .tiers {
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.unassigned {
+  position: sticky;
+  top: 16px;
+  align-self: start;
+  min-height: 320px;
 }
 
 .tier {
@@ -292,4 +306,12 @@ button.ghost, label.file-label {
   .top-actions { width: 100%; flex-wrap: wrap; }
   .board-head { flex-direction: column; align-items: flex-start; }
   .category-list { gap: 6px; }
+
+  .board-body {
+    grid-template-columns: 1fr;
+  }
+
+  .unassigned {
+    position: static;
+  }
 }

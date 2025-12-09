@@ -9,7 +9,7 @@ const tierColors = {
 };
 
 const baseParticipants = [
-  'Гоша', 'Саша', 'Артур', 'Антон', 'Леша Борисов', 'Леша Преображенский',
+  'Гоша', 'Саша', 'Антон', 'Леша Борисов', 'Леша Преображенский',
   'Дима Трушин', 'Дима Герасимов', 'Стёпа', 'Анна', 'Пуфик', 'Лера', 'Эмиль', 'Даня',
   'Матвей Перминов', 'Матвей Исупов', 'Микаэл', 'Виктор', 'Денис', 'Иван Рекунов',
   'Игорь', 'Влад', 'Руслан', 'Роман', 'Андрей', 'Чечел'
@@ -51,6 +51,8 @@ const categoryCountEl = document.getElementById('category-count');
 const categoryListEl = document.getElementById('category-list');
 const activeCategoryNameEl = document.getElementById('active-category-name');
 const tierContainerEl = document.getElementById('tier-container');
+const unassignedListEl = document.getElementById('unassigned-list');
+const unassignedCountEl = document.getElementById('unassigned-count');
 const resetCategoryBtn = document.getElementById('reset-category');
 const exportJsonBtn = document.getElementById('export-json');
 const exportCsvBtn = document.getElementById('export-csv');
@@ -133,24 +135,27 @@ function renderBoard() {
   if (!category) {
     activeCategoryNameEl.textContent = 'Нет категорий';
     tierContainerEl.innerHTML = '';
+    unassignedListEl.innerHTML = '';
+    unassignedCountEl.textContent = '0';
     return;
   }
 
   activeCategoryNameEl.textContent = category.name;
   tierContainerEl.innerHTML = '';
 
-  tierOrder.forEach((tierId) => {
+  const mainTiers = tierOrder.filter((t) => t !== 'Unassigned');
+  mainTiers.forEach((tierId) => {
     const wrapper = document.createElement('div');
     wrapper.className = 'tier';
 
     const header = document.createElement('div');
     header.className = 'tier-header';
     const title = document.createElement('div');
-    title.textContent = tierId === 'Unassigned' ? 'Неразмещено' : `${tierId} Tier`;
+    title.textContent = `${tierId} Tier`;
     const tag = document.createElement('span');
     tag.className = 'tag';
     tag.style.background = tierColors[tierId];
-    tag.textContent = tierId === 'Unassigned' ? '—' : tierId;
+    tag.textContent = tierId;
 
     header.appendChild(title);
     header.appendChild(tag);
@@ -170,6 +175,16 @@ function renderBoard() {
     wrapper.appendChild(list);
     tierContainerEl.appendChild(wrapper);
   });
+
+  // Render unassigned on the right
+  unassignedListEl.innerHTML = '';
+  category.tiers.Unassigned.forEach((personId) => {
+    const person = participants.find((p) => p.id === personId);
+    if (!person) return;
+    unassignedListEl.appendChild(makePersonCard(person));
+  });
+  enableDnd(unassignedListEl);
+  unassignedCountEl.textContent = category.tiers.Unassigned.length.toString();
 }
 
 function makePersonCard(person) {
